@@ -1,73 +1,52 @@
 <!DOCTYPE html>
-<html lang="="en" data-theme="">
+<html lang="en" data-theme="">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Over Under - Tips & VIP</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Over Under Admin Panel</title>
   <style>
-    :root {
-      color-scheme: light dark;
-    }
+    :root { color-scheme: light dark; }
     html[data-theme='dark'], body {
-      background: #0f0f0f;
-      color: #fff;
+      background-color: #121212;
+      color: #ffffff;
     }
     html[data-theme='light'], body {
-      background: #ffffff;
+      background-color: #ffffff;
       color: #000000;
     }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-    }
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
     header {
-      background: #1a1a1a;
-      padding: 20px;
-      text-align: center;
+      background-color: #1a1a1a;
       color: #00ff88;
+      text-align: center;
+      padding: 20px;
       font-size: 24px;
       font-weight: bold;
     }
     nav {
-      background: #111;
       display: flex;
-      justify-content: center;
+      justify-content: space-around;
+      background-color: #111;
       padding: 10px;
     }
     nav a {
       color: #00ff88;
-      margin: 0 15px;
       text-decoration: none;
     }
-    .container {
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-    .section {
-      background: #1f1f1f;
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 30px;
-      box-shadow: 0 0 10px #00ff88;
-    }
-    .section h2 {
-      margin-top: 0;
-      color: #00ff88;
-    }
-    .section p {
-      font-size: 16px;
-    }
-    input, button {
-      width: 100%;
+    .container { padding: 20px; max-width: 1000px; margin: auto; }
+    .section { margin-bottom: 30px; }
+    .section h2 { color: #00ff88; border-bottom: 1px solid #00ff88; padding-bottom: 5px; }
+    input, select, button {
       padding: 10px;
-      margin-top: 10px;
-      border-radius: 5px;
+      margin: 5px 0;
+      width: 100%;
       border: none;
+      border-radius: 5px;
     }
     button {
-      background: #00ff88;
+      background-color: #00ff88;
       color: #000;
+      font-weight: bold;
       cursor: pointer;
     }
     table {
@@ -84,52 +63,76 @@
       background: #222;
       color: #00ff88;
     }
+    .vip, .free {
+      background-color: #1f1f1f;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
     footer {
       background: #111;
+      color: #888;
       text-align: center;
       padding: 10px;
       font-size: 14px;
-      color: #888;
     }
   </style>
 </head>
 <body>
-  <header>Over Under</header>
+  <header>Over Under Admin Panel</header>
   <nav>
-    <a href="#">Tips</a>
-    <a href="#">VIP</a>
-    <a href="#">Free</a>
+    <a href="#add">Add Tip</a>
+    <a href="#records">Records</a>
+    <a href="#vip">VIP</a>
+    <a href="#free">Free</a>
   </nav>
 
   <div class="container">
-    <div class="section">
-      <h2>VIP Subscription</h2>
-      <p>Subscribe to our VIP Tips for only <strong>$500</strong>. Contact admin for details.</p>
+    <div class="section" id="loginSection">
+      <h2>Admin Login</h2>
+      <input type="password" id="adminPass" placeholder="Enter password">
+      <button onclick="unlockPanel()">Login</button>
     </div>
 
-    <div class="section">
-      <h2>Free Predictions</h2>
-      <ul>
-        <li>3.3.2025 – Chelsea vs Tottenham Hotspur – Under 3</li>
-        <li>2.3.2025 – Real Madrid vs Barcelona – Over 2.5 Goals</li>
-      </ul>
-    </div>
-
-    <div class="section">
-      <h2>Admin Tip Records</h2>
-      <div id="adminLogin">
-        <input type="password" id="adminPass" placeholder="Enter admin password to view tips" />
-        <button onclick="verifyPassword()">Unlock</button>
+    <div id="panel" style="display:none;">
+      <div class="section" id="add">
+        <h2>Add New Tip</h2>
+        <input type="text" id="date" placeholder="Date (e.g. Apr 5, 2025)">
+        <input type="text" id="match" placeholder="Match (e.g. Team A vs Team B)">
+        <input type="text" id="tip" placeholder="Tip (e.g. Over 2.5 Goals)">
+        <select id="result">
+          <option value="Win">Win</option>
+          <option value="Lose">Lose</option>
+          <option value="Pending">Pending</option>
+        </select>
+        <button onclick="addTip()">Add Tip</button>
       </div>
-      <div id="tipTableSection" style="display:none;">
-        <table>
+
+      <div class="section" id="records">
+        <h2>Tip Records</h2>
+        <table id="tipTable">
           <thead>
-            <tr><th>Date</th><th>Match</th><th>Tip</th><th>Result</th></tr>
+            <tr><th>Date</th><th>Match</th><th>Tip</th><th>Result</th><th>Action</th></tr>
           </thead>
-          <tbody>
-            <tr><td>3.3.2025</td><td>Chelsea vs Tottenham Hotspur</td><td>Under 3</td><td>Win</td></tr>
-          </tbody>
+          <tbody></tbody>
         </table>
+      </div>
+
+      <div class="section" id="vip">
+        <h2>VIP Subscription - $500</h2>
+        <div class="vip">
+          <p>Only for paid members. Contact admin for details.</p>
+        </div>
+      </div>
+
+      <div class="section" id="free">
+        <h2>Free Predictions</h2>
+        <div class="free" id="freeList">
+          <ul>
+            <li>3.3.2025 – Chelsea vs Tottenham – Under 3</li>
+            <li>2.3.2025 – Real Madrid vs Barcelona – Over 2.5</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -137,15 +140,41 @@
   <footer>&copy; 2025 Over Under. All rights reserved.</footer>
 
   <script>
-    const correctPassword = "waigyi2025";
-    function verifyPassword() {
-      const input = document.getElementById('adminPass').value;
-      if (input === correctPassword) {
-        document.getElementById('tipTableSection').style.display = 'block';
-        document.getElementById('adminLogin').style.display = 'none';
+    const adminPassword = "waigyi2025";
+    function unlockPanel() {
+      const input = document.getElementById("adminPass").value;
+      if (input === adminPassword) {
+        document.getElementById("loginSection").style.display = "none";
+        document.getElementById("panel").style.display = "block";
       } else {
-        alert('Incorrect password!');
+        alert("Incorrect password!");
       }
+    }
+
+    function addTip() {
+      const date = document.getElementById("date").value;
+      const match = document.getElementById("match").value;
+      const tip = document.getElementById("tip").value;
+      const result = document.getElementById("result").value;
+
+      if (!date || !match || !tip || !result) {
+        alert("Fill all fields.");
+        return;
+      }
+
+      const table = document.getElementById("tipTable").getElementsByTagName("tbody")[0];
+      const row = table.insertRow();
+      row.innerHTML = `<td>${date}</td><td>${match}</td><td>${tip}</td><td>${result}</td>
+      <td><button onclick="deleteRow(this)">Delete</button></td>`;
+
+      document.getElementById("date").value = "";
+      document.getElementById("match").value = "";
+      document.getElementById("tip").value = "";
+    }
+
+    function deleteRow(btn) {
+      const row = btn.parentNode.parentNode;
+      row.parentNode.removeChild(row);
     }
 
     function detectTheme() {
