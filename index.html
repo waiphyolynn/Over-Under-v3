@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="="en" data-theme="">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Over Under - Tips & VIP</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+    }
+    html[data-theme='dark'], body {
+      background: #0f0f0f;
+      color: #fff;
+    }
+    html[data-theme='light'], body {
+      background: #ffffff;
+      color: #000000;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    header {
+      background: #1a1a1a;
+      padding: 20px;
+      text-align: center;
+      color: #00ff88;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    nav {
+      background: #111;
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+    }
+    nav a {
+      color: #00ff88;
+      margin: 0 15px;
+      text-decoration: none;
+    }
+    .container {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    .section {
+      background: #1f1f1f;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 0 10px #00ff88;
+    }
+    .section h2 {
+      margin-top: 0;
+      color: #00ff88;
+    }
+    .section p {
+      font-size: 16px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      background: #00ff88;
+      color: #000;
+      cursor: pointer;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background: #222;
+      color: #00ff88;
+    }
+    footer {
+      background: #111;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>Over Under</header>
+  <nav>
+    <a href="#">Tips</a>
+    <a href="#">VIP</a>
+    <a href="#">Free</a>
+  </nav>
+
+  <div class="container">
+    <div class="section">
+      <h2>VIP Subscription</h2>
+      <p>Subscribe to our VIP Tips for only <strong>$500</strong>. Contact admin for details.</p>
+    </div>
+
+    <div class="section">
+      <h2>Free Predictions</h2>
+      <ul>
+        <li>3.3.2025 – Chelsea vs Tottenham Hotspur – Under 3</li>
+        <li>2.3.2025 – Real Madrid vs Barcelona – Over 2.5 Goals</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Admin Tip Records</h2>
+      <div id="adminLogin">
+        <input type="password" id="adminPass" placeholder="Enter admin password to view tips" />
+        <button onclick="verifyPassword()">Unlock</button>
+      </div>
+      <div id="tipTableSection" style="display:none;">
+        <table>
+          <thead>
+            <tr><th>Date</th><th>Match</th><th>Tip</th><th>Result</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>3.3.2025</td><td>Chelsea vs Tottenham Hotspur</td><td>Under 3</td><td>Win</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer>&copy; 2025 Over Under. All rights reserved.</footer>
+
+  <script>
+    const correctPassword = "waigyi2025";
+    function verifyPassword() {
+      const input = document.getElementById('adminPass').value;
+      if (input === correctPassword) {
+        document.getElementById('tipTableSection').style.display = 'block';
+        document.getElementById('adminLogin').style.display = 'none';
+      } else {
+        alert('Incorrect password!');
+      }
+    }
+
+    function detectTheme() {
+      const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    }
+
+    detectTheme();
+  </script>
+</body>
+</html>
